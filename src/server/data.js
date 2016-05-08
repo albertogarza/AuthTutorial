@@ -1,5 +1,6 @@
 module.exports = {
-  people: getPeople()
+  people: getPeople(),
+  admin: getAdmin()
 };
 
 function getPeople() {
@@ -13,4 +14,11 @@ function getPeople() {
     { id: 7, firstName: 'Haley', lastName: 'Guthrie', age: 35, location: 'Wyoming' },
     { id: 8, firstName: 'Aaron', lastName: 'Jinglehiemer', age: 22, location: 'Utah' }
   ];
+}
+
+function getAdmin() {
+  return [
+    { id: 1, firstName: 'Alberto', lastName: 'Garza', age: 25, location: 'Utah' },
+    { id: 2, firstName: 'Robert', lastName: 'Parr', age: 40, location: 'California' }
+  ]
 }
