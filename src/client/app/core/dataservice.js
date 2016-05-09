@@ -21,7 +21,7 @@
       return $http.post('/api/authenticate', {email: email, password: password})
         .then(function(response) {
           console.log(response.data.token);
-          
+
           $state.go('dashboard');
         })
         .catch(function(error) {
@@ -48,7 +48,18 @@
     }
 
     function fail(e) {
-      return exception.catcher('XHR Failed for getPeople')(e);
+      console.log(e);
+      if (e.status === 403) {
+        $state.go('login');
+        if (typeof e.data === 'string') {
+          var data = e.data;
+          e.data = {};
+          e.data.msg = data;
+          e.data.description = 'Please authenticate. ';
+        }
+        return exception.catcher('You are not authenticated.')(e);
+      }
+      return exception.catcher('XHR Failed')(e);
     }
   }
 })();
