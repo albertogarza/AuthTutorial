@@ -294,9 +294,44 @@ Expected result: When navigating to /login, you should be presented with a login
 
 ### Step #4: Add mechanism to route unauthenticated requests back to the login route (client)
 
+1. Hint: it's in the dataservice.js file.
+2. Bonus points: If you can get the toaster to properly display 'You are not authenticated. Please login.', that would be great!
+
+Expected result: When navigating to either dashboard or admin and I'm not authenticated, the app should route me to the login screen.
+
 ### Step #5: Store and make use of token returned upon authentication to make subsequent requests to the server
 
+1. Create a principal service in the app.core module to keep track of the token received after successful authentication.
+2. Save the token on the principal service after each successful authentication.
+3. Add an interceptor for requests to add the token to the header for each request.
+
+Expected result: Once authentication is successful, you should be redirected to the dashboard and from there navigate between admin and dashboard without being redirected to the login screen.
+
 ### Step #6: Add roles to users (server) and use them to authorize them (client and server)
+
+1. In your data.js (server), add a roles attribute to each user with an array of roles. Examples: roles: ['USER'], roles: ['USER', 'ADMIN']
+2. In your routes.js (server), add the user roles to the response.
+3. In your principal service, create a getter and setter for a new roles attribute.
+4. In your dataservice.js, save the roles on your principal service upon a successful authentication.
+5. Decorate the $state service in the config section of your app so $state can also have the toState and the toParams (on every $stateChangeStart).
+6. Add a roles property in admin.route.js under settings. Example: roles: ['ADMIN']
+7. In router-helper.provider.js, add a resolve to the resolveAways config to check for authorization. This will be added to each state's resolve during configuration. Make sure that if the toState contains settings.roles, to check that the logged in user has at least one of those roles. If they do, let them through but if not, reject the promise that needs to be returned.
+
+Expected result: User will not be able to navigate to routes for which he/she does not have roles to. A toaster message should be displayed as well stating the user is unathorized to access the page.
+
+### Step #7: Complete authorization by enforcing it on the server side as well
+
+1. Add a paths object to the data.js file that will return an array with each path and the authorized roles for each path.
+2. In the isAuthenticated function, check for authorization as well.
+
+Expected result: Requests from postman that are not properly authorized will be rejected with a 401 response status.
+
+### Extra step #8: Implement the above authentication and authorization but using passport.js and acl
+
+1. Documentation for passport.js: http://passportjs.org/docs
+2. Documentation for acl: https://www.npmjs.com/package/acl
+
+Expected result: Same result.
 
 ## License
 
