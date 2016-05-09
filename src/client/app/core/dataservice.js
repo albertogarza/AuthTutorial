@@ -5,9 +5,9 @@
     .module('app.core')
     .factory('dataservice', dataservice);
 
-  dataservice.$inject = ['$http', '$q', 'exception', 'logger', '$state'];
+  dataservice.$inject = ['$http', '$q', 'exception', 'logger', '$state', 'principal'];
   /* @ngInject */
-  function dataservice($http, $q, exception, logger, $state) {
+  function dataservice($http, $q, exception, logger, $state, principal) {
     var service = {
       authenticate: authenticate,
       getPeople: getPeople,
@@ -21,7 +21,7 @@
       return $http.post('/api/authenticate', {email: email, password: password})
         .then(function(response) {
           console.log(response.data.token);
-
+          principal.setToken(response.data.token);
           $state.go('dashboard');
         })
         .catch(function(error) {
