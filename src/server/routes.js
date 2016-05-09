@@ -42,6 +42,17 @@ function isAuthenticated(req, res, next) {
     // validate token
     try {
       var decoded = jwt.verify(bearerToken, secretKey);
+      //check authorization
+      console.log(req.route.path);
+      var path = data.paths.find(function(path) {
+        return path.path === req.route.path;
+      });
+      var auth = decoded.roles.find(function(role) {
+        return path.roles.indexOf(role) > -1;
+      });
+      if (!auth) {
+        res.sendStatus(401);
+      }
     } catch(err) {
       res.sendStatus(403);
       return;
@@ -66,7 +77,7 @@ function authenticate(req, res) {
     res.json({
       type: true,
       data: user.email,
-      token: jwt.sign(user.email, secretKey/*, {expiresIn: '1h'}*/),
+      token: jwt.sign({email: user.email, roles: user.roles}, secretKey/*, {expiresIn: '1h'}*/),
       roles: user.roles
     });
   } else {

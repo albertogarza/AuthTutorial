@@ -1,7 +1,8 @@
 module.exports = {
   people: getPeople(),
   admin: getAdmin(),
-  users: getUsers()
+  users: getUsers(),
+  paths: getPaths()
 };
 
 function getPeople() {
@@ -28,5 +29,13 @@ function getUsers() {
   return [
     { email: 'user@test.com', password: '1234', roles: ['USER']},
     { email: 'admin@test.com', password: '1234', roles: ['USER', 'ADMIN']}
+  ]
+}
+
+function getPaths() {
+  return [
+    {path: '/people', roles: ['USER', 'ADMIN']},
+    {path: '/person/:id', roles: ['USER', 'ADMIN']},
+    {path: '/admin', roles: ['ADMIN']}
   ]
 }
