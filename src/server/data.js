@@ -26,7 +26,7 @@ function getAdmin() {
 
 function getUsers() {
   return [
-    { email: 'user@test.com', password: '1234'},
-    { email: 'admin@test.com', password: '1234'}
+    { email: 'user@test.com', password: '1234', roles: ['USER']},
+    { email: 'admin@test.com', password: '1234', roles: ['USER', 'ADMIN']}
   ]
 }

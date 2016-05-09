@@ -66,7 +66,8 @@ function authenticate(req, res) {
     res.json({
       type: true,
       data: user.email,
-      token: jwt.sign(user.email, secretKey/*, {expiresIn: '1h'}*/)
+      token: jwt.sign(user.email, secretKey/*, {expiresIn: '1h'}*/),
+      roles: user.roles
     });
   } else {
     res.sendStatus(403);
