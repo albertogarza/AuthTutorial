@@ -24,7 +24,7 @@
       return dataservice.getAdmin().then(function(data) {
         vm.people = data;
         return vm.people;
-      })
+      });
     }
   }
 })();
