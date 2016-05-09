@@ -14,7 +14,7 @@
 
   var config = {
     appErrorPrefix: '[securityDay1 Error] ',
-    appTitle: 'securityDay1'
+    appTitle: 'Security Day 1 Workshop'
   };
 
   core.value('config', config);
