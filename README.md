@@ -1,4 +1,4 @@
-# securityDay1
+# Authentication and Authorization Workshop
 
 **Generated from HotTowel Angular**
 
@@ -9,8 +9,6 @@
 ## Prerequisites
 
 1. Install [Node.js](http://nodejs.org)
- - on OSX use [homebrew](http://brew.sh) `brew install node`
- - on Windows use [chocolatey](https://chocolatey.org/) `choco install nodejs`
 
 2. Install Yeoman `npm install -g yo`
 
@@ -262,6 +260,43 @@ The `blocks.router` module contains a routing helper module that assists in addi
     --type=major
     --type=pre
     --ver=1.2.3 // specific version
+    
+## Workshop Instructions
+
+Each step-xx/ folder under the steps/ folder represent the changes made to make that step to work. Try to do the following without them but if you're ever lost or behind, feel free to drop the files in the project folders to get up to speed.
+
+### Step #1: Add authentication to each server route
+
+1. Install jsonwebtoken to server app (npm install jsonwebtoken --save)
+2. Require jsonwebtoken on your routes.js file
+3. Create your own secret key
+4. Create an isAuthenticated function that uses jsonwebtoken to validate a token from a header value
+5. Add the new isAuthenticated function as a step to get to each route (/people, /person/:id, /admin)
+
+Expected result: All routes now return 403 Forbidden
+
+### Step #2: Add a /authenticate route on the server to retrieve a token
+
+1. Add some random users to the data.js file on the server
+2. Create an authenticate function that will authenticate a post request against the users you just created. If successful, return a token.
+3. Create an /authenticate route on the server that will call the authenticate function
+
+Expected result: /authenticate returns token when successful. That same token can be validated when requesting a different resource (e.g. /admin).
+
+### Step #3: Create a login route/view/controller on the client
+
+1. Create controller, view, module, and route for a login screen.
+2. Make view to have a form with an ng-submit that calls a function from the controller.
+3. Add an authenticate function to the dataservice file that calls the /api/authenticate and passes in the arguments.
+4. Handle the response from the server by simply login response.data.token and forward UI to dashboard route.
+
+Expected result: When navigating to /login, you should be presented with a login screen. If you put in the correct credentials and submit, you should see the token logged on the console and redirected to dashboard. If credentials are incorrect, you should see a 403 Forbidden response.
+
+### Step #4: Add mechanism to route unauthenticated requests back to the login route (client)
+
+### Step #5: Store and make use of token returned upon authentication to make subsequent requests to the server
+
+### Step #6: Add roles to users (server) and use them to authorize them (client and server)
 
 ## License
 

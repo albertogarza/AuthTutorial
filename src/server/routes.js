@@ -54,10 +54,10 @@ function isAuthenticated(req, res, next) {
 }
 
 
-function authenticate(req, res, next) {
+function authenticate(req, res) {
   var email = req.body.email;
   var password = req.body.password;
-  console.log('processing authentication request ' + data.users);
+  console.log('processing authentication request ' + email + password);
   var user = data.users.find(function(user) {
     console.log('is this it?')
     return user.email === email && user.password === password;
